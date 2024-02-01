@@ -39,15 +39,21 @@ namespace WinFormsApp1
                     requestCount++;
                 }
 
-                var rest = sharedClient.GetAsync(sharedClient.BaseAddress).Result;
-                string json = rest.Content.ReadAsStringAsync().Result;
-                dynamic deserialized = JsonConvert.DeserializeObject(json);
-
-                context.Invoke(() =>
+                try
                 {
-                    context.label1.Text = deserialized.datetime;
-                    context.label2.Invoke(delegate { context.label2.Text = $"Кол-во запросов {requestCount} время работы {watch.Elapsed}"; });
-                });
+                    var rest = sharedClient.GetAsync(sharedClient.BaseAddress).Result;
+                    string json = rest.Content.ReadAsStringAsync().Result;
+                    dynamic deserialized = JsonConvert.DeserializeObject(json);
+                    context.Invoke(() =>
+                    {
+                        context.label1.Text = deserialized.datetime;
+                        context.label2.Invoke(delegate { context.label2.Text = $"Кол-во запросов {requestCount} время работы {watch.Elapsed}"; });
+                    });
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
     }
