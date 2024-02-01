@@ -47,7 +47,7 @@ namespace WinFormsApp1
                     context.Invoke(() =>
                     {
                         context.label1.Text = deserialized.datetime;
-                        context.label2.Invoke(delegate { context.label2.Text = $"Кол-во запросов {requestCount} время работы {watch.Elapsed}"; });
+                        context.label2.Text = $"Кол-во запросов {requestCount} время работы {watch.Elapsed}";
                     });
                 }
                 catch (Exception ex)
